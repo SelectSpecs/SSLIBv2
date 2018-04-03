@@ -1,0 +1,19 @@
+{
+  "name": "deluxo/sslib",
+  "description": "SSLIB api for worker version 3",
+  "license": "MIT",
+  "minimum-stability": "stable",
+  "type": "library",
+  "authors": [
+    {
+      "name": "DeLuXoUa",
+      "email": "aligator.if@gmail.com",
+      "role": "Administrator"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "SSAPIv3\\": "SSAPIv3"
+    }
+  }
+}
