@@ -26,7 +26,7 @@ class SSAPIv2
         $body = ['email' => $this->login, 'password' => $this->password];
         $result = $this->sendRequest('/manager/auth', 'POST', $body);
 
-        if ($result['error']) {
+        if (isset($result['error'])) {
             throw new Exception('Auth Error', $this->parseErrorMessage($result['error']));
         } else {
             $this->token = $result['token'];
