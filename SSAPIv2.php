@@ -61,32 +61,38 @@ class SSAPIv2
     {
         $this->checkExpired();
         $body = '';
+        $url = $this->apiHost . $url;
         $method = strtoupper($method);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_WRITEFUNCTION, function ($curl, $data) use (&$body) {
             $body .= $data;
             return mb_strlen($data, '8bit');
         });
-        curl_setopt($ch, CURLOPT_URL, $this->apiHost . $url);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
         curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
 
+        $headers = [
+            "Authorization: $this->token",
+            "Content-Type: application/json"
+        ];
+
         if ($json) {
+            if ($method === 'GET') {
+                $sign = strpos($url, '?') === false ? '?' : '&';
+                $url .= $sign . http_build_query($json);
+            }
             if (is_array($json)) {
                 $json = json_encode($json);
             }
+            $headers[] =  "Content-Length: " . strlen($json);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
         }
 
-        $headers = [
-            "Authorization: $this->token",
-            "Content-Type: application/json",
-            "Content-Length: " . strlen($json)
-        ];
+        curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
+        
         try {
             $result = curl_exec($ch);
         } catch (\Exception $e) {
