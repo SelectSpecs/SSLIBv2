@@ -118,7 +118,7 @@ class SSAPIv2
         // Check the status code exists
         if ($responseCode == 200) {
             if (isset($response['error'])) {
-                throw new Exception('Request error result', $this->parseErrorMessage($result['error']));
+                throw new Exception('Request error result', $this->parseErrorMessage($response['error']));
             } else {
                 return $response;
             }
