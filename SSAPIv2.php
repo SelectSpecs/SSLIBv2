@@ -101,13 +101,14 @@ class SSAPIv2
 
         // Curl error
         if ($result === false) {
-            throw new Exception('SSAPI request failed: ' . curl_errno($this->_curl) . ' - ' . curl_error($this->_curl), [
+            throw new Exception(json_encode([
+                'responseMessage' => 'SSAPI request failed: ' . curl_errno($this->_curl) . ' - ' . curl_error($this->_curl),
                 'requestMethod' => $method,
                 'requestUrl' => $url,
                 'requestBody' => $json,
                 'responseHeaders' => $headers,
                 'responseBody' => $this->decodeErrorBody($body),
-            ]);
+            ], JSON_PRETTY_PRINT));
         }
         $responseCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
