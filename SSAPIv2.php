@@ -102,7 +102,7 @@ class SSAPIv2
         // Curl error
         if ($result === false) {
             throw new Exception(json_encode([
-                'responseMessage' => 'SSAPI request failed: ' . curl_errno($this->_curl) . ' - ' . curl_error($this->_curl),
+                'responseMessage' => 'SSAPI request failed: ' . curl_errno($ch) . ' - ' . curl_error($ch),
                 'requestMethod' => $method,
                 'requestUrl' => $url,
                 'requestBody' => $json,
