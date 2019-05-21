@@ -24,6 +24,7 @@ class SSAPIv2
     private function auth()
     {
         $body = ['email' => $this->login, 'password' => $this->password];
+        $this->expired = false;
         $result = $this->sendRequest('/manager/auth', 'POST', $body);
 
         if (isset($result['error'])) {
