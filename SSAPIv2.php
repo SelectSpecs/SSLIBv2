@@ -10,7 +10,7 @@ class SSAPIv2
 
     private $token;
     private $expired;
-    private $apiHost = 'http://alpha.omnismain.com:3000/api/v.2';
+    private $apiHost = 'http://alpha.omnismain.com:3010/api/v.2';
 
 
     function __construct($login, $password)
